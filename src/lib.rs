@@ -6,9 +6,6 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-#[macro_use]
-extern crate failure;
-
 pub extern crate derivation_path;
 pub extern crate ed25519_dalek;
 
@@ -17,15 +14,16 @@ pub use ed25519_dalek::{PublicKey, SecretKey};
 
 use hmac::{Hmac, Mac, NewMac};
 use sha2::Sha512;
+use thiserror::Error;
 
 const ED25519_BIP32_NAME: &str = "ed25519 seed";
 
 /// Errors thrown while deriving secret keys
-#[derive(Debug, Fail)]
+#[derive(Debug, Error)]
 pub enum Error {
-    #[fail(display = "ed25519 error")]
+    #[error("ed25519 error")]
     Ed25519,
-    #[fail(display = "expected hardened child index: {}", _0)]
+    #[error("expected hardened child index: {0}")]
     ExpectedHardenedIndex(ChildIndex),
 }
 
