@@ -29,6 +29,9 @@ pub enum Error {
     ExpectedHardenedIndex(ChildIndex),
 }
 
+#[cfg(feature = "std")]
+impl std::error::Error for Error { }
+
 /// An expanded secret key with chain code and meta data
 #[derive(Debug)]
 pub struct ExtendedSecretKey {
